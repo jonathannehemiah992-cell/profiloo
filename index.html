@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jonathan Nehemiah Kaboshio Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        .about-image img {
+            width: 160px;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid #23a6d5;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+            background: #eee;
+        }
+        /* Scroll-to-top button styles */
+        #scrollTopBtn {
+            display: none;
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 999;
+            background: #709ae1;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+            transition: background 0.3s;
+        }
+        #scrollTopBtn:hover {
+            background: #7b7bdb;
+        }
+        /* Typewriter effect styles */
+        .typewriter {
+            border-right: 2px solid #2575fc;
+            white-space: nowrap;
+            overflow: hidden;
+            animation: blink-caret 0.75s step-end infinite;
+        }
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #2575fc; }
+        }
+        /* Theme Switcher */
+        .theme-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+            background: #fff;
+            border-radius: 50px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+        .theme-switcher i {
+            font-size: 1.3rem;
+        }
+        /* Progress bar for skills */
+        .skills-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            margin-bottom: 0.7rem;
+            position: relative;
+        }
+        .skill-bar {
+            width: 120px;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-left: 10px;
+        }
+        .skill-bar-inner {
+            height: 100%;
+            background: linear-gradient(90deg, #23a6d5, #6a11cb);
+            width: 0;
+            transition: width 1.2s cubic-bezier(.77,0,.18,1);
+        }
+        /* Modal styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal {
+            background: #fff;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 400px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+            text-align: center;
+            position: relative;
+        }
+        .modal-close {
+            position: absolute;
+            top: 10px; right: 16px;
+            font-size: 1.3rem;
+            cursor: pointer;
+            color: #2575fc;
+        }
+        /* Animated background shapes */
+        .bg-shape {
+            position: fixed;
+            z-index: 0;
+            opacity: 0.12;
+            pointer-events: none;
+            border-radius: 50%;
+            filter: blur(2px);
+            animation: float 12s infinite alternate ease-in-out;
+        }
+        .bg-shape1 { width: 300px; height: 300px; background: #23a6d5; left: -100px; top: 100px; animation-delay: 0s;}
+        .bg-shape2 { width: 200px; height: 200px; background: #6a11cb; right: -80px; top: 350px; animation-delay: 2s;}
+        .bg-shape3 { width: 180px; height: 180px; background: #e73c7e; left: 60vw; bottom: -90px; animation-delay: 4s;}
+        @keyframes float {
+            0% { transform: translateY(0) scale(1);}
+            100% { transform: translateY(-40px) scale(1.08);}
+        }
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+            cursor: pointer;
+        }
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 120px;
+            background: #2575fc;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 6px 0;
+            position: absolute;
+            z-index: 10;
+            bottom: 125%; left: 50%; transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.95rem;
+        }
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg-shape bg-shape1"></div>
+    <div class="bg-shape bg-shape2"></div>
+    <div class="bg-shape bg-shape3"></div>
+
+    <div class="theme-switcher" id="themeSwitcher" title="Switch theme">
+        <i class="fas fa-moon"></i> <span id="themeText">Dark Mode</span>
+    </div>
+
+    <nav>
+        <a href="#home"><b>Home</b></a>
+        <a href="#skills"><b>Skills</b></a>
+        <a href="#experience"><b>Experience</b></a>
+        <a href="#project"><b>Projects</b></a>
+    </nav>
+
+    <main>
+        <header>
+            <div class="container">
+                <h1>
+                    👋 Hi, I'm <span class="typewriter" id="typewriter"></span>
+                </h1>
+                <p>Software Engineer / Web Programmer</p>
+            </div>
+        </header>
+
+        <section id="about">
+            <div class="container about-container">
+                <div class="about-image tooltip">
+                    <img src="love.jpd.jpg" alt="Jonathan Nehemiah Kaboshio"
+                         onerror="this.onerror=null;this.src='https://via.placeholder.com/250?text=No+Image';">
+                    <span class="tooltiptext">That's me!</span>
+                </div>
+                <div class="about-text">
+                    <h2><b>About Me</b></h2>
+                    <p>
+      I am passionate about building web applications and learning new technologies. 
+      I enjoy coding💻 and creating projects that solve real problems. I specialize in JavaScript and React, with a keen interest in optimizing user experiences through clean, efficient code. 
+      One of my proudest achievements is developing a task management tool that improved team productivity by 30%. 
+      I also love exploring emerging trends like AI development and have recently completed a machine learning course.
+    </p>
+    <p>
+      My journey into coding began as a hobby, turning into a passion for crafting solutions that make a difference. 
+      I thrive in agile environments and enjoy collaborating with teams to bring ideas to life. 
+      On the side, I contribute to open-source projects and mentor aspiring developers in the tech community.
+    </p>
+                    <button id="openModalBtn" style="margin-top:1rem;padding:0.5rem 1.2rem;background:#2575fc;color:#fff;border:none;border-radius:6px;cursor:pointer;">
+                        More About Me
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills">
+            <div class="container">
+                <h2><b>My Skills💻</b></h2>
+                <ul class="skills-list">
+                    <li><i class="fab fa-html5"></i> HTML
+                        <div class="skill-bar"><div class="skill-bar-inner" data-skill="95"></div></div>
+                    </li>
+                    <li><i class="fab fa-css3-alt"></i> CSS
+                        <div class="skill-bar"><div class="skill-bar-inner" data-skill="90"></div></div>
+                    </li>
+                    <li><i class="fab fa-js"></i> JavaScript
+                        <div class="skill-bar"><div class="skill-bar-inner" data-skill="85"></div></div>
+                    </li>
+                    <li><i class="fab fa-php"></i> PHP
+                        <div class="skill-bar"><div class="skill-bar-inner" data-skill="70"></div></div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="experience">
+            <div class="container">
+                <h2><b>Experience🧠</b></h2>
+                <div class="experience-item">
+                    <h3>Intern Web Developer</h3>
+                    <p>Worked on building and maintaining websites using HTML, CSS, and JavaScript. Assisted in debugging and deploying small-scale projects.</p>
+                </div>
+                <div class="experience-item">
+                    <h3>Freelance Projects</h3>
+                    <p><strong>Self-employed</strong></p>
+                    <p>Created simple websites for local businesses and improved my problem-solving skills while working independently.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="project">
+            <div class="container">
+                <h2><b>Projects 📝</b></h2>
+                <div class="project-item">
+                    <p>Designed  and developed a responsive personal portfolio using HTML, CSS, and JavaScript.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <div class="container">
+                <h2><b>Contact 📱</b></h2>
+                <p>📩 <b>EMAIL:</b> <i><a href="mailto:jonathannehemiah992@gmail.com">jonathannehemiah992@gmail.com</a></p></i>
+                <p>📞<b>PHONE:</b>  <i>09117347150</i> </p>
+                <p><b>WHATSAPP:</b>  <i>+2349117347150</i></p>
+                <p><b>FACEBOOK:</b>  <i> Kaboshio jnr</i></p>
+                <p><b>INSTAGRAM:</b> <i>jonathannehemiah</i></p>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 My Website</p>
+    </footer>
+
+    <!-- Scroll-to-top button -->
+    <button id="scrollTopBtn" title="Go to top"><i class="fas fa-arrow-up"></i></button>
+
+    <!-- Modal for More About Me -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <span class="modal-close" id="modalCloseBtn">&times;</span>
+            <h2>More About Me</h2>
+            <p>
+                I love collaborating on open-source projects, exploring new frameworks, and mentoring junior developers.<br>
+                In my free time, I enjoy reading tech blogs, playing football⚽, and chess.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Typewriter effect for your name
+        const typewriterText = "Jonathan Nehemiah Kaboshio";
+        const typewriterElem = document.getElementById("typewriter");
+        let i = 0;
+        function typeWriter() {
+            if (i < typewriterText.length) {
+                typewriterElem.textContent += typewriterText.charAt(i);
+                i++;
+                setTimeout(typeWriter, 100);
+            }
+        }
+        typeWriter();
+
+        // Scroll-to-top button functionality
+        const scrollTopBtn = document.getElementById("scrollTopBtn");
+        window.onscroll = function() {
+            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                scrollTopBtn.style.display = "block";
+            } else {
+                scrollTopBtn.style.display = "none";
+            }
+        };
+        scrollTopBtn.onclick = function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Animate sections on scroll (fade-in)
+        const sections = document.querySelectorAll('section');
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = "translateY(0)";
+                }
+            });
+        }, { threshold: 0.2 });
+
+        sections.forEach(section => {
+            section.style.opacity = 0;
+            section.style.transform = "translateY(40px)";
+            section.style.transition = "opacity 0.8s, transform 0.8s";
+            observer.observe(section);
+        });
+
+        // Animated skill bars
+        function animateSkillBars() {
+            document.querySelectorAll('.skill-bar-inner').forEach(bar => {
+                const value = bar.getAttribute('data-skill');
+                bar.style.width = value + '%';
+            });
+        }
+        // Animate skill bars when skills section is visible
+        const skillsSection = document.getElementById('skills');
+        let skillsAnimated = false;
+        const skillsObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !skillsAnimated) {
+                    animateSkillBars();
+                    skillsAnimated = true;
+                }
+            });
+        }, { threshold: 0.3 });
+        skillsObserver.observe(skillsSection);
+
+        // Theme Switcher (Dark/Light)
+        const themeSwitcher = document.getElementById('themeSwitcher');
+        const themeText = document.getElementById('themeText');
+        let darkMode = false;
+        themeSwitcher.addEventListener('click', () => {
+            document.body.classList.toggle('dark-theme');
+            darkMode = !darkMode;
+            if (darkMode) {
+                themeText.textContent = "Light Mode";
+                themeSwitcher.querySelector('i').classList.replace('fa-moon', 'fa-sun');
+            } else {
+                themeText.textContent = "Dark Mode";
+                themeSwitcher.querySelector('i').classList.replace('fa-sun', 'fa-moon');
+            }
+        });
+        // Dark theme styles
+        const darkThemeStyle = document.createElement('style');
+        darkThemeStyle.textContent = `
+            body.dark-theme {
+                background: #181c24 !important;
+                color: #e0e0e0 !important;
+            }
+            body.dark-theme nav {
+                background-color: #292424;
+            }
+
+            body.dark-theme nav a{
+                color: white;
+            }
+            body.dark-theme nav, body.dark-theme section, body.dark-theme footer {
+                background: #23283a !important;
+                color: #e0e0e0 !important;
+            }
+            body.dark-theme .experience-item{
+                background: #181c24;
+            }
+            body.dark-theme .theme-switcher{
+                background: #181c24 !important;
+            }
+
+            // body.dark-theme .modal, body.dark-theme .theme-switcher {
+            //     background: #23283a !important;
+            //     color: #e0e0e0 !important;
+            // }
+            // body.dark-theme .modal-close { color: #e73c7e !important; }
+            // body.dark-theme .skill-bar { background: #333 !important; }
+        `;
+        document.head.appendChild(darkThemeStyle);
+
+        // Modal functionality
+        const openModalBtn = document.getElementById('openModalBtn');
+        const modalOverlay = document.getElementById('modalOverlay');
+        const modalCloseBtn = document.getElementById('modalCloseBtn');
+        openModalBtn.addEventListener('click', () => {
+            modalOverlay.style.display = 'flex';
+        });
+        modalCloseBtn.addEventListener('click', () => {
+            modalOverlay.style.display = 'none';
+        });
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) modalOverlay.style.display = 'none';
+        });
+
+        // Easter Egg: Press "J" 3 times to show a secret message
+        let jCount = 0;
+        document.addEventListener('keydown', (e) => {
+            if (e.key.toLowerCase() === 'j') {
+                jCount++;
+                if (jCount === 3) {
+                    alert('🎉 You found the secret! Keep coding, Jonathan!');
+                    jCount = 0;
+                }
+            } else {
+                jCount = 0;
+            }
+        });
+
+        // Fun: Change favicon on hover over your name
+        const faviconLink = document.createElement('link');
+        faviconLink.rel = 'icon';
+        faviconLink.href = 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f44b.png';
+        document.head.appendChild(faviconLink);
+        typewriterElem.parentElement.addEventListener('mouseenter', () => {
+            faviconLink.href = 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f60e.png';
+        });
+        typewriterElem.parentElement.addEventListener('mouseleave', () => {
+            faviconLink.href = 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f44b.png';
+        });
+    </script>
+</body>
+</html>
+
+        // Easter Egg: Press "J" 3 times to show
